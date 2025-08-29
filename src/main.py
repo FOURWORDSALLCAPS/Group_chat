@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 
@@ -35,6 +36,7 @@ app.add_middleware(
 )
 app.include_router(router)
 
+app.mount("/static", StaticFiles(directory=settings.STATIC_DIR), name="static")
 
 if __name__ == "__main__":
     uvicorn.run(

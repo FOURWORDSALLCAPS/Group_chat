@@ -1,3 +1,5 @@
+import os
+
 from pydantic_settings import BaseSettings
 
 
@@ -9,6 +11,9 @@ class Settings(BaseSettings):
     VERSION: str = "v1.0"
     DOC_URL: str = "/docs"
     OPENAPI_URL: str = "/openapi.json"
+    BASE_DIR: str = os.path.dirname(__file__)
+    STATIC_DIR: str = os.path.join(BASE_DIR, "static")
+    TEMPLATES_DIR: str = os.path.join(BASE_DIR, "templates")
     LOG_LEVEL: str = "debug"
     LOG_FORMAT: str = '{"time": "%(asctime)s", "level": "%(levelname)s", "file": "%(name)s", "line": "%(lineno)s", "msg": "%(msg)s"}'
     POSTGRES_URI: str = (

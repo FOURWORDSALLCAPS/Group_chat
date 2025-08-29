@@ -3,7 +3,7 @@ FROM python:3.13-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /usr/src
+WORKDIR /usr
 
 RUN pip install --upgrade pip && \
     pip install poetry && \

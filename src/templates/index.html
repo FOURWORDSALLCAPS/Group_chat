@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-actions">
+                    <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+                </div>
+                <div class="user-info">
+                    <div class="user-details">
+                        <span id="userName">Connecting...</span>
+                        <span class="user-status">online</span>
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Поиск">
+                </div>
+            </div>
+            <div class="chats-list">
+                <div class="chat-item">
+                    <div class="avatar">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Общий чат</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-resizer" id="sidebarResizer"></div>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="chat-partner">
+                    <div class="avatar">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="partner-info">
+                        <div class="partner-name">Общий чат</div>
+                        <div class="partner-status">
+                            <span>Online</span>
+                            <span id="userCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="messages-container" id="messages"></div>
+
+            <div class="message-input-container">
+                <div class="input-actions">
+                    <button class="icon-btn"><i class="far fa-smile"></i></button>
+                </div>
+                <textarea id="messageInput" placeholder="Сообщение..." rows="1"></textarea>
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <emoji-picker></emoji-picker>
+
+    <script src="/static/app.js"></script>
+    <script src="/static/emoji.js"></script>
+</body>
+</html>
