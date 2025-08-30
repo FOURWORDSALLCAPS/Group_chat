@@ -36,13 +36,13 @@ class UserDB(Base):
         comment="Отчество",
     )
     birthday: Mapped[date | None] = mapped_column(
-        comment="дата рождения",
+        comment="Дата рождения",
     )
-    phone: Mapped[int | None] = mapped_column(
-        comment="номер телефона",
+    phone: Mapped[str | None] = mapped_column(
+        comment="Номер телефона",
     )
     email: Mapped[str | None] = mapped_column(
-        comment="электронная почти",
+        comment="Электронная почта",
     )
     active: Mapped[bool] = mapped_column(
         default=True,

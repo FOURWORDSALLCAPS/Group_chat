@@ -5,11 +5,13 @@ from sqlalchemy import select, and_
 from src.dependencies import container
 from src.engines.postgres_storage import PostgresEngine
 from src.models.chat_messages import ChatMessageDB
+from src.repositories.base import BaseRepository
 
 
-class ChatMessageRepository:
+class ChatMessageRepository(BaseRepository):
     def __init__(self):
-        self.db: PostgresEngine = container.resolve(PostgresEngine)
+        db: PostgresEngine = container.resolve(PostgresEngine)
+        super().__init__(db, ChatMessageDB)
 
     async def get_chat_history_by_chat_uuid(
         self, chat_uuid: UUID

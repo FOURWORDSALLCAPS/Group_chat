@@ -8,7 +8,7 @@ CREATE TABLE users (
     last_name         VARCHAR(255)                                                   ,
     middle_name       VARCHAR(255)                                                   ,
     birthday          DATE                                                           ,
-    phone             BIGINT                                                         ,
+    phone             VARCHAR(20)                                                    ,
     email             VARCHAR(255)                                                   ,
     active            BOOLEAN                     DEFAULT TRUE               NOT NULL,
 
