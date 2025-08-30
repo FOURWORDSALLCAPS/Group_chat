@@ -65,7 +65,7 @@
                     <button class="icon-btn"><i class="far fa-smile"></i></button>
                 </div>
                 <textarea id="messageInput" placeholder="Сообщение..." rows="1"></textarea>
-                <button class="send-btn" onclick="sendMessage()">
+                <button class="send-btn">
                     <i class="fas fa-comment-dots"></i>
                 </button>
             </div>
@@ -73,6 +73,20 @@
     </div>
 
     <emoji-picker></emoji-picker>
+
+    <template id="login-template">
+        <div class="auth-modal">
+            <div class="auth-container">
+                <h3 class="auth-title">Авторизация</h3>
+                <form class="auth-form" id="authForm">
+                    <input type="text" id="login" class="auth-input" placeholder="Логин" required>
+                    <input type="password" id="password" class="auth-input" placeholder="Пароль" required>
+                    <button type="submit" class="auth-submit">Войти</button>
+                </form>
+                <div id="authError" class="auth-error"></div>
+            </div>
+        </div>
+    </template>
 
     <script src="/static/app.js"></script>
     <script src="/static/emoji.js"></script>

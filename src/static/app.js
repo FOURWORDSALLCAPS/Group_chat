@@ -5,6 +5,7 @@ class ChatApplication {
         this.isResizing = false;
         this.startX = 0;
         this.startWidth = 0;
+        this.userUuid = null;
         this.ws = null;
 
         this.init();
@@ -12,13 +13,95 @@ class ChatApplication {
 
     init() {
         this.setupEventListeners();
-        this.initWebSocket();
+        this.initAuthModal();
+        this.checkAuth();
         this.restoreSidebarWidth();
+    }
+
+    initAuthModal() {
+        const template = document.getElementById('login-template');
+        this.authModal = document.createElement('div');
+        this.authModal.appendChild(template.content.cloneNode(true))
+        document.body.appendChild(this.authModal);
+
+        const form = this.authModal.querySelector('#authForm');
+        form.addEventListener('submit', (e) => this.handleLogin(e));
+    }
+
+    checkAuth() {
+        const savedUserUuid = localStorage.getItem('chat_user_uuid');
+        if (savedUserUuid) {
+            this.userUuid = savedUserUuid;
+            this.isAuthenticated = true;
+            this.hideAuthModal();
+            this.initWebSocket();
+        } else {
+            this.showAuthModal();
+        }
+    }
+
+    handleLogin(e) {
+        e.preventDefault();
+
+        const username = document.getElementById('login').value;
+        const password = document.getElementById('password').value;
+        const errorDiv = document.getElementById('authError');
+
+        const submitButton = this.authModal.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Вход...';
+
+        fetch('/v1/auth/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+
+            if (response.ok) {
+                return response.json().then(data => {
+                    this.userUuid = data.user_uuid;
+                    this.isAuthenticated = true;
+
+                    localStorage.setItem('chat_user_uuid', this.userUuid);
+
+                    this.hideAuthModal();
+                    this.initWebSocket();
+                });
+            } else {
+                return response.json().then(errorData => {
+                    errorDiv.textContent = errorData.detail || `Ошибка авторизации: ${response.status}`;
+                    errorDiv.style.display = 'block';
+                }).catch(() => {
+                    errorDiv.textContent = `Ошибка авторизации: ${response.status}`;
+                    errorDiv.style.display = 'block';
+                });
+            }
+        })
+        .catch(error => {
+            errorDiv.textContent = 'Ошибка подключения к серверу';
+            errorDiv.style.display = 'block';
+        })
+        .finally(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+        });
+    }
+
+    showAuthModal() {
+        this.authModal.style.display = 'flex';
+    }
+
+    hideAuthModal() {
+        this.authModal.style.display = 'none';
     }
 
     initWebSocket() {
         try {
-            this.ws = new WebSocket(`ws://${window.location.host}/v1/ws/`);
+            this.ws = new WebSocket(`ws://${window.location.host}/v1/ws/?user_uuid=${this.userUuid}`);
             this.setupWebSocketHandlers();
         } catch (error) {
             this.addSystemMessage('Ошибка подключения к серверу');

@@ -28,7 +28,7 @@ class WebsocketClient:
         )
         return username
 
-    def disconnect(self, username: str):
+    async def disconnect(self, username: str):
         if username in self.active_connections:
             del self.active_connections[username]
 

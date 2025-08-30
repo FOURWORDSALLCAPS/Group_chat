@@ -7,7 +7,7 @@ from src.schemes.base import BaseSanitizedModel
 
 
 class BaseUser(BaseSanitizedModel):
-    uuid: UUID = Field(
+    user_uuid: UUID = Field(
         description="Уникальный идентификатор пользователя",
         examples=["a3d8f1e4-7b2c-4e9d-8a5f-1b3c9d7e5f2a"],
     )
